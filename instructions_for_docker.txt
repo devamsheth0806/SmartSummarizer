@@ -1,0 +1,17 @@
+sudo docker run -v "Path to your host":"Path where the directory is to be mounted in container" -p 5000:8887 -ti iamrj846/smartsummarizer:latest
+
+-v => tells the docker to mount the address on the left side which is on the host machine to the address on the right side on the container. This allows file to be uploaded from the host machine for test inputs.
+
+-p 5000:8887 => container serving a page on port 8887 can be accessed via the browser on localhost:5000 on the host machine.
+
+For sample inputs:
+
+1) For URL based: https://www.mayoclinic.org/diseases-conditions/coronavirus/expert-answers/novel-coronavirus/faq-20478727
+		depth: 2, keywords: (coronavirus, covid)
+2) For Doc based: the path to be given is "path of host machine entered in the run command"+filename(without extension)
+3) For PDF based: the path to be given is "path of host machine entered in the run command"+filename(without extension)
+4) For social media based:
+		a) If using facebook or twitter => provide the authentication key for facebook
+		b) If using RSS feeds => Use RSS link as https://timesofindia.indiatimes.com/rssfeedstopstories.cms
+	After the summary is generated, visit localhost:5000 on your system to see the output and the wordcloud.
+
