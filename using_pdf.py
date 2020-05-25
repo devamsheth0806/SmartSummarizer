@@ -26,7 +26,6 @@ from gensim import similarities
 from gensim.summarization.summarizer import summarize
 
 
-
 """This function extracts text from PDFs present in a folder, named 'PDFs'.
 Extracts text per paragraph"""
 def pdf_to_text(path):
@@ -128,7 +127,7 @@ def lsi_sum(texts, documents):
     final=""
     for i, s in enumerate(sims):
         if(sent>0):
-            final=final+documents[s[0]]+" "
+            final=final+documents[s[0]]+" " #documents is a list of all sentences and s[0] indexes it with help of similarity score, s is a tuple (document_number, document_similarity score)
             sent=sent-1
     my_list=rank(final)
     l=['these','those','this','that']
