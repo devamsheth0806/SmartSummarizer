@@ -83,17 +83,17 @@ def lsi_sum(texts, documents):
             sent=sent-1
     my_list=rank(final)
     final=""
-    l=['these','those','this','that']
-    u=['This', 'That','These','Those']
-    for s in l:
+    lower=['these','those','this','that']
+    upper=['This', 'That','These','Those']
+    for s in lower:
         my_list[0]=my_list[0].replace(s,"the")
-    for s in u:
+    for s in upper:
         my_list[0]=my_list[0].replace(s,"The")
     for sent in my_list:
         final=final+sent+" "
     return final
 
-"""Main function"""
+"""driver function for summarizing text files"""
 def doc_driver():
     
     #Extracting data from given file based on type
