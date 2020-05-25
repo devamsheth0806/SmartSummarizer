@@ -106,7 +106,7 @@ def lsi_sum(texts, documents):
     check=int(input("View keywords of topics discussed: \nPress 1 for Yes\nPress 0 for No\n"))
     if(check==1):
         print("\nTopic wise keywords are:")
-        for index, topic in lsi.show_topics(formatted=False, num_words= 10):
+        for index, topic in lsi.show_topics(formatted=False, num_words= 3):
             print('Topic: {} \nWords: {}'.format(index, [w[0] for w in topic]))
 
     query=input("Enter the keywords: ")
@@ -120,7 +120,7 @@ def lsi_sum(texts, documents):
         
     sims = index[vec_lsi]  # perform a similarity query against the corpus
     # print (document_number, document_similarity) 2-tuples)
-    #print(list(enumerate(sims)))
+    #print(list(enumerate(sims))) #prints the similarity score of query with sentences
     
     sims = sorted(enumerate(sims), key=lambda item: -item[1])
     sent=int(input("Enter the number of sentences required: "))
@@ -131,13 +131,13 @@ def lsi_sum(texts, documents):
             final=final+documents[s[0]]+" "
             sent=sent-1
     my_list=rank(final)
-    final=""
     l=['these','those','this','that']
     u=['This', 'That','These','Those']
     for s in l:
         my_list[0]=my_list[0].replace(s,"the")
     for s in u:
         my_list[0]=my_list[0].replace(s,"The")
+    final="" #appending all sentences into a summary
     for sent in my_list:
         final=final+sent+" "
     return final
