@@ -6,9 +6,7 @@ import pandas as pd
 import numpy as np 
 import nltk
 import math
-import mglearn
-import pyLDAvis
-import pyLDAvis.sklearn
+
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
@@ -20,6 +18,7 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud,STOPWORDS
 import feedparser
 import sys
+import time
 LANGUAGE = "english"
 
 def social_driver(token,keywords,nopost,date,sn,flag):
@@ -126,7 +125,7 @@ def social_driver(token,keywords,nopost,date,sn,flag):
             for j in i:
                 if(j=='description'):
                     sentences1.append(i[j])
-        
+        sentences = list(set(sentences))
         def lda(sum2):
             vect=CountVectorizer(ngram_range=(1,1),stop_words='english')
             d=(sum2).split(". ")
@@ -135,8 +134,6 @@ def social_driver(token,keywords,nopost,date,sn,flag):
             lda_dtf=lda.fit_transform(dtm)
             sorting=np.argsort(lda.components_)[:,::-1]
             features=np.array(vect.get_feature_names())
-            mglearn.tools.print_topics(topics=range(5), feature_names=features,
-            sorting=sorting, topics_per_chunk=5, n_words=10)
             Agreement_Topic=np.argsort(lda_dtf[:,2])[::-1]
             k=[]
             for i in Agreement_Topic[:4]:
@@ -146,21 +143,18 @@ def social_driver(token,keywords,nopost,date,sn,flag):
                 if ".".join(d[i].split(".")[:2]) + ".\n" not in k:
                     k.append(".".join(d[i].split(".")[:2]) + ".\n")
             final_sum = " ".join(k)
-            #zit=pyLDAvis.sklearn.prepare(lda,dtm,vect)
-            return final_sum
-            """pyLDAvis.show(zit,ip='127.0.0.1',port=8887)
+            
             d = path.dirname("")
             alice_mask = np.array(Image.open(path.join(d, "Nigeria.png")))
             stopwords = set(STOPWORDS)
             wc = WordCloud(background_color="black", max_words=2000, mask=alice_mask,stopwords=stopwords)
             wc.generate(sum2)
-            plt.figure(figsize=(16,13))
-            plt.imshow(wc, interpolation='bilinear')
-            plt.axis("off")
-            plt.figure()
-            plt.show()"""
-
-        final_sum = lda(" ".join(sentences[0])+" "+" ".join(sentences1))
+            wc.to_file(str(time.time())+"word_cloud.png")
+            return final_sum
+        try:
+            final_sum = lda(" ".join(sentences[0])+" "+" ".join(sentences1))
+        except:
+            final_sum = 'Text related to keyword not found.'
         return final_sum
 	        
 	    
@@ -180,7 +174,7 @@ def social_driver(token,keywords,nopost,date,sn,flag):
                             t=1
                 if(t==1):
                     sentences.append(i.description)
-            
+        sentences = list(set(sentences))
         def lda():
             vect=CountVectorizer(ngram_range=(1,1),stop_words='english')
             d=" ".join(sentences).split(". ")
@@ -189,8 +183,6 @@ def social_driver(token,keywords,nopost,date,sn,flag):
             lda_dtf=lda.fit_transform(dtm)
             sorting=np.argsort(lda.components_)[:,::-1]
             features=np.array(vect.get_feature_names())
-            mglearn.tools.print_topics(topics=range(5), feature_names=features,
-            sorting=sorting, topics_per_chunk=5, n_words=10)
             Agreement_Topic=np.argsort(lda_dtf[:,2])[::-1]
             k=[]
             for i in Agreement_Topic[:4]:
@@ -200,21 +192,17 @@ def social_driver(token,keywords,nopost,date,sn,flag):
                 if ".".join(d[i].split(".")[:2]) + ".\n" not in k:
                     k.append(".".join(d[i].split(".")[:2]) + ".\n")
             final_sum = " ".join(k)
-            return final_sum
-            """zit=pyLDAvis.sklearn.prepare(lda,dtm,vect)
-            pyLDAvis.show(zit,ip='127.0.0.1',port=8887)
             d = path.dirname("")
             alice_mask = np.array(Image.open(path.join(d, "Nigeria.png")))
             stopwords = set(STOPWORDS)
             wc = WordCloud(background_color="black", max_words=2000, mask=alice_mask,stopwords=stopwords)
             wc.generate(" ".join(sentences))
-            plt.figure(figsize=(16,13))
-            plt.imshow(wc, interpolation='bilinear')
-            plt.axis("off")
-            plt.figure()
-            plt.show()"""
-        
-        final_sum = lda()
+            wc.to_file(str(time.time())+'word_cloud.png')
+            return final_sum
+        try:
+            final_sum = lda()
+        except:
+            final_sum = 'Text related to keyword not found.'
         return final_sum
     
     keywords=keywords.splitlines()
