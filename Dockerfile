@@ -7,10 +7,13 @@ WORKDIR /usr/src/app
 COPY . .
 
 # install dependencies
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
+
+# install nltk dependencies
+RUN [ "python3", "-c", "import nltk; nltk.download('all')" ]
 
 # tell the port number the container should expose
 EXPOSE 8887
 
 # run the command
-CMD ["python", "./driver.py"]
+CMD ["python3", "./GUI_1.6.py"]

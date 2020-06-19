@@ -18,3 +18,5 @@ pillow
 matplotlib
 wordcloud
 feedparser
+tkcalendar
+Django
