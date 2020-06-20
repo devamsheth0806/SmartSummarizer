@@ -1,0 +1,22 @@
+Instructions for running docker application in Ubuntu Linux:
+
+To run the application as a docker container in linux system, follow these steps. All the steps are mandatory. 
+
+1) Run the following command on your system.
+	xauth list
+
+2) Make sure that the output is of the form 
+	username/unix:0 MIT-MAGIC-COOKIE-1 8fe8efc75454dbf178bbe00442689406
+
+3) Copy the above output in a separate file
+
+4) Run the following command.
+	sudo docker run -v <Path to a folder in your system containing input files>:/usr/src/app/inputFiles -ti --net=host -e DISPLAY -v /tmp/.X11-unix iamrj846/smart2.0:latest bash
+
+	Example path of the folder is: /home/username/Desktop/inputFiles
+
+5) Inside the bash, run the following commands
+	a) xauth add <the output pasted in a separate file in step 2>
+	b) Verify that the host system is connected to the remote system using this command: xauth list
+6) Run the file GUI_1.6.py using the following command.
+	a) python3 GUI_1.6.py

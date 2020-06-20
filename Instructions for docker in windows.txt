@@ -1,0 +1,28 @@
+Setup for running docker application in Windows 10:
+
+Pre-requisite:
+Turn on windows feature for Hyper-V and Windows subsystem for linux
+
+1. Download docker for windows from this link - https://hub.docker.com/editions/community/docker-ce-desktop-windows/
+
+2. Download VcXsrv Windows X server from this link - https://sourceforge.net/projects/vcxsrv/
+
+3. Install the above softwares
+
+4. Following steps are required everytime when the host system is booted:
+	a. Launch Xlaunch
+	b. Select Multiple Windows option and select next (keep display number as -1)
+	c. Select Start no client option and click next
+	d. Check all the checkboxes and select next
+	e. Save configuration file any where in %userprofile%
+	f. Click finish
+
+5. Set 'DISPLAY' variable:
+	a. open command prompt and enter ipconfig
+	b. copy the IP address of IPv4
+	c. open powershell and set 'DISPLAY' variable using the following command:
+		set-variable -name DISPLAY -value <IP address>:0.0
+	d. Don't close that powershell
+
+6. In that same powershell, enter the following command to run the docker image:
+	docker run -v <Path to a folder in your system containing input files>:/usr/src/app/inputFiles -ti -e DISPLAY=$DISPLAY iamrj846/smart2.0:latest

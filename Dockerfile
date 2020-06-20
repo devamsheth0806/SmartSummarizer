@@ -7,9 +7,9 @@ WORKDIR /usr/src/app
 COPY . .
 
 # install dependencies
+RUN apt-get -y update
+RUN apt-get -y install xauth
 RUN pip3 install -r requirements.txt
-
-# install nltk dependencies
 RUN [ "python3", "-c", "import nltk; nltk.download('all')" ]
 
 # tell the port number the container should expose
