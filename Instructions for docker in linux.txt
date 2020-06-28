@@ -1,7 +1,4 @@
-Instructions for running docker application in Ubuntu Linux:
-
 To run the application as a docker container in linux system, follow these steps. All the steps are mandatory. 
-
 1) Run the following command on your system.
 	xauth list
 
@@ -13,10 +10,13 @@ To run the application as a docker container in linux system, follow these steps
 4) Run the following command.
 	sudo docker run -v <Path to a folder in your system containing input files>:/usr/src/app/inputFiles -ti --net=host -e DISPLAY -v /tmp/.X11-unix iamrj846/smart2.0:latest bash
 
-	Example path of the folder is: /home/username/Desktop/inputFiles
+Example path of the folder is: /home/username/Desktop/inputFiles
 
 5) Inside the bash, run the following commands
 	a) xauth add <the output pasted in a separate file in step 2>
 	b) Verify that the host system is connected to the remote system using this command: xauth list
 6) Run the file GUI_1.6.py using the following command.
 	a) python3 GUI_1.6.py
+
+NOTE:
+If an error such as {_tkinter.TclError: couldn't connect to display ":1"} persists, replace :0 with :1 in the token in step 2.
